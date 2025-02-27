@@ -1,7 +1,9 @@
 package com.example.meteoapp.network
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CurrentUnits(
     val time: String,
     val interval: String,

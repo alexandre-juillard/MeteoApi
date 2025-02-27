@@ -5,9 +5,10 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 private const val BASE_URL =
-    "https://open-meteo.com/"
+    "https://api.open-meteo.com/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -15,8 +16,11 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface MeteoApiService {
-    @GET("v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m")
-    suspend fun getMeteo(): Meteo
+    @GET("v1/forecast")
+    suspend fun getMeteo(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("current") current: String = "temperature_2m,wind_speed_10m"): Meteo
 }
 
 object MeteoApi {
